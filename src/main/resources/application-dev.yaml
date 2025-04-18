@@ -1,0 +1,110 @@
+# Spring 开发环境配置
+spring:
+  #  配置文件接受设置
+  servlet:
+    multipart:
+      max-file-size: 10MB
+  output:
+    # 按照 ansi 的颜色进行输出
+    ansi:
+      enabled: always
+  mvc:
+    # 配置日期格式
+    format:
+      date: yyyy-MM-dd
+      time: HH:mm:ss
+      date-time: yyyy-MM-dd HH:mm:ss
+  #  配置 MySQL 数据源
+  datasource:
+    type: com.zaxxer.hikari.HikariDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/template?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123456
+  # 配置 MariaDB 数据源
+  #  datasource:
+  #    type: com.zaxxer.hikari.HikariDataSource
+  #    driver-class-name: org.mariadb.jdbc.Driver
+  #    url: jdbc:mariadb://localhost:3307/template
+  #    username: root
+  #    password: 123456
+  # 配置 PostgreSQL 数据源
+  #  datasource:
+  #    type: com.zaxxer.hikari.HikariDataSource
+  #    driver-class-name: org.postgresql.Driver
+  #    url: jdbc:postgresql://localhost:5432/postgres
+  #    username: postgres
+  #    password: 082400
+  #  配置 spring cache 类型
+  cache:
+    type: redis
+  data:
+    # 配置 Redis
+    redis:
+      host: localhost
+      port: 6379
+      password: 123456
+      timeout: 60000
+      database: 0 # default
+      lettuce:
+        pool:
+          max-active: 32
+          max-idle: 16
+          min-idle: 8
+    # 配置 MongoDB
+    mongodb:
+      port: 27017
+      database: blog
+  #  配置 email 服务
+  mail:
+    host: your_smtp_server_address          # SMTP 服务器地址
+    port: 587                               # SMTP 端口
+    username: your_email_account            # 邮箱账号
+    password: your_password                 # 邮箱密码
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+server:
+  port: 8080
+  servlet:
+    context-path: /
+
+# 配置日志
+logging:
+  # 不打印项目的名称
+  include-application-name: false
+  level:
+    root: INFO
+    com.bryan.template.controller: DEBUG
+    com.bryan.template.service.impl: DEBUG
+  file:
+    name: logs/springbootdemo.log  # 日志文件路径
+    max-size: 10MB                 # 最大日志文件大小
+    max-history: 30                # 最大保留的历史日志文件数量
+
+# MyBatis Plus 配置
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true                    # 配置驼峰映射
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl # 配置 SQL 日志格式
+  global-config:
+    db-config:
+      logic-delete-field: removed                         # 全局逻辑删除字段名
+      logic-delete-value: 1                               # 逻辑已删除值
+      logic-not-delete-value: 0                           # 逻辑未删除值
+
+# 自定义 jwt 配置
+jwt:
+  #    admin
+  admin-role-name: 管理员
+  admin-secret-key: bryan
+  admin-ttl: 7200000
+  #    user
+  user-role-name: 普通用户
+  user-secret-key: visitor
+  user-ttl: 3600000
